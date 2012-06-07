@@ -35,7 +35,7 @@ module ::Guard
     end
 
     def start
-      UI.info "guard-mirror started."
+      UI.info "A mirror has started."
       run_all
     end
 
@@ -67,7 +67,7 @@ module ::Guard
             end)
         end
       end
-      UI.info 'Done'
+      UI.info 'Done.'
     end
 
     private
