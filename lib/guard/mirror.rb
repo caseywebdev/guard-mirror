@@ -35,11 +35,13 @@ module ::Guard
     end
 
     def start
+      UI.info "guard-mirror started."
       run_all
     end
 
     def run_all
-      run_on_change(
+      UI.info "Mirroring all files..."
+      run_on_changes(
         @options[:target] ?
         [@options[:target]] :
         Dir[File.join @env.paths.first, '**{,/*/**}.*'].map do |path|
@@ -48,11 +50,11 @@ module ::Guard
       )
     end
 
-    def run_on_change paths
+    def run_on_changes paths
       (@options[:target] ? [@options[:target]] : paths).each do |src|
         dest = src_to_dest src
         dirname = File.dirname dest
-        UI.info "#{src} -> #{dest}"
+        UI.info "Mirroring #{src} -> #{dest}"
         FileUtils.mkdir_p dirname unless File.directory? dirname
         File.open(dest, 'w') do |f|
           f.write(
@@ -64,8 +66,8 @@ module ::Guard
               e
             end)
         end
-        UI.info 'Done'
       end
+      UI.info 'Done'
     end
 
     private

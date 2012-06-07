@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
   s.name        = 'guard-mirror'
-  s.version     = '1.0.0'
+  s.version     = '0.1.0'
   s.date        = '2012-06-07'
   s.summary     = 'Mirror .coffee, .styl, and .jade as .js, .css, and .html'
-  s.author     = 'Casey Foster'
+  s.author      = 'Casey Foster'
   s.email       = 'nick@quaran.to'
   s.files       = Dir['lib/**/*.rb']
   s.homepage    = 'https://github.com/caseywebdev/guard-mirror'
@@ -14,13 +14,13 @@ Gem::Specification.new do |s|
     (public/www/etc...).
   EOF
 
-  s.required_ruby_version = '>= 1.9.2'
-  s.add_runtime_dependency 'guard'
-  s.add_runtime_dependency 'sprockets'
-  s.add_runtime_dependency 'coffee-script'
-  s.add_runtime_dependency 'jade'
-  s.add_runtime_dependency 'stylus'
-  s.add_runtime_dependency 'closure-compiler'
-  s.add_runtime_dependency 'yui-compressor'
-  s.add_runtime_dependency 'json'
+  s.required_ruby_version = '>= 1.9.3'
+  s.add_dependency 'guard'
+  s.add_dependency 'sprockets'
+  s.add_dependency 'coffee-script'
+  s.add_dependency 'jade'
+  s.add_dependency 'stylus'
+  s.add_dependency 'closure-compiler'
+  s.add_dependency 'yui-compressor'
+  s.add_dependency 'json'
 end
