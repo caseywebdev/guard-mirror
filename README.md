@@ -11,42 +11,48 @@ Installation
 
 In your `Gemfile`...
 
-    source :rubygems
+```ruby
+source :rubygems
 
-    gem install guard-mirror
+gem install guard-mirror
+```
 
 Configuration
 -------------
 
 In your `Guardfile`...
 
-    guard :mirror,
-        paths: ['src/js/templates', 'src/js'],
-        target: 'app.coffee',
-        dest: 'www',
-        compress: true do
-      watch %r{^src/js/(.+\..+)}
-    end
+```ruby
+guard :mirror,
+    paths: ['src/js/templates', 'src/js'],
+    target: 'app.coffee',
+    dest: 'www',
+    compress: true do
+  watch %r{^src/js/(.+\..+)}
+end
 
-    guard :mirror,
-        paths: ['src/css'],
-        target: 'app.styl',
-        dest: 'www',
-        compress: true do
-      watch %r{^src/css/(.+\..+)}
-    end
+guard :mirror,
+    paths: ['src/css'],
+    target: 'app.styl',
+    dest: 'www',
+    compress: true do
+  watch %r{^src/css/(.+\..+)}
+end
 
-    guard :mirror,
-        paths: ['src/html'],
-        dest: 'www' do
-      watch(%r{^src/html/(.+\..+)}) { |m| m[1] }
-    end
+guard :mirror,
+    paths: ['src/html'],
+    dest: 'www' do
+  watch(%r{^src/html/(.+\..+)}) { |m| m[1] }
+end
+```
 
 Running It
 ----------
 
-    bundle update
-    bundle --binstubs
-    bin/guard
+```bash
+bundle update
+bundle --binstubs
+bin/guard
+```
 
 Profit!
