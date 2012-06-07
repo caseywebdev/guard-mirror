@@ -35,39 +35,42 @@ module ::Guard
     end
 
     def start
-      UI.info "A mirror has started."
+      UI.info 'A mirror has started.'
       run_all
     end
 
     def run_all
-      UI.info "Mirroring all files..."
-      run_on_changes(
-        @options[:target] ?
-        [@options[:target]] :
-        Dir[File.join @env.paths.first, '**{,/*/**}.*'].map do |path|
-          path[@env.paths.first.length + 1 .. -1]
-        end
-      )
+      UI.info 'Mirroring all files...'
+      if @options[:target]
+        paths = [@options[:target]]
+      else
+        paths = @env.paths.map do |path|
+          Dir[File.join path, '**{,/*/**}.*'].map do |file|
+            file[path.length + 1 .. -1]
+          end
+        end.flatten
+      end
+      run_on_changes paths
     end
 
     def run_on_changes paths
-      (@options[:target] ? [@options[:target]] : paths).each do |src|
-        dest = src_to_dest src
+      (@options[:target] ? [@options[:target]] : paths).each do |path|
+        dest = src_to_dest path
         dirname = File.dirname dest
-        UI.info "Mirroring #{src} -> #{dest}"
+        UI.info "Mirroring #{path}..."
         FileUtils.mkdir_p dirname unless File.directory? dirname
         File.open(dest, 'w') do |f|
           f.write(
             begin
-              @env[src]
-            rescue ExecJS::ProgramError => e
-              e
-            rescue ExecJS::RuntimeError => e
-              e
-            end)
+              @env[path]
+            rescue => e
+              UI.error e.message
+              e.message
+            end
+          )
         end
+        UI.info "Saved to #{dest}."
       end
-      UI.info 'Done.'
     end
 
     private
