@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.name        = 'guard-mirror'
-  s.version     = '0.1.3'
+  s.version     = '0.2.0'
   s.date        = '2012-06-08'
   s.summary     = 'Mirror .coffee, .styl, and .jade as .js, .css, and .html'
   s.author      = 'Casey Foster'
   s.email       = 'nick@quaran.to'
-  s.files       = Dir['lib/**/*.rb']
+  s.files       = Dir['README.md', 'lib/**/*.rb']
   s.homepage    = 'https://github.com/caseywebdev/guard-mirror'
 
   s.description = <<-EOF

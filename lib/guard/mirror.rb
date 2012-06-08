@@ -3,8 +3,8 @@ require 'guard/guard'
 require 'sprockets'
 require 'coffee_script'
 require 'jade'
-require "#{File.dirname __FILE__}/../jade/html_compiler.rb"
-require "#{File.dirname __FILE__}/../jade/html_template.rb"
+require_relative 'mirror/jade/html_compiler'
+require_relative 'mirror/jade/template'
 require 'stylus'
 require 'closure-compiler'
 require 'yui/compressor'
@@ -16,14 +16,24 @@ module ::Guard
       super
 
       @options = {
-        compress: false
+        notify: true
       }.merge options
 
       @env = ::Sprockets::Environment.new
+
+      # CoffeeScript is baked into sprockets so we can skip that, but register
+      # these other guys.
       @env.register_mime_type 'text/html', '.html'
-      @env.register_engine '.jade', ::Jade::HtmlTemplate
-      @env.register_engine '.jadet', ::Jade::Template
+
+      # The problem (awesomeness) with Jade is that it can export HTML or an
+      # anonymous function for use as a JST. Use `.html.jade` for HTML and
+      # `.jst.jade` for a jade template.
+      @env.register_engine '.jade', ::Jade::Template
+
       @env.register_engine '.styl', ::Tilt::StylusTemplate
+
+      # Turn on nib on demand
+      Stylus.use :nib if @options[:nib]
 
       @options[:paths].each { |path| @env.append_path path }
 
@@ -57,20 +67,24 @@ module ::Guard
       (@options[:target] ? [@options[:target]] : paths).each do |path|
         dest = src_to_dest path
         dirname = File.dirname dest
-        UI.info "Mirroring #{path}..."
+        UI.info "IN -> #{path}..."
         FileUtils.mkdir_p dirname unless File.directory? dirname
         File.open(dest, 'w') do |f|
           f.write(
             begin
               @env[path]
             rescue => e
-              Notifier.notify e.message, title: 'guard-mirror', image: :failed
+              if @options[:nofify]
+                Notifier.notify e.message,
+                  title: 'guard-mirror',
+                  image: :failed
+              end
               UI.error e.message
               e.message
             end
           )
         end
-        UI.info "Saved to #{dest}."
+        UI.info "OUT -> #{dest}"
       end
     end
 
@@ -78,9 +92,9 @@ module ::Guard
 
     def src_to_dest path
       path = path
-        .sub(/\.coffee|\.jst\.jadet/, '.js')
+        .sub(/\.coffee|\.jst\.jade/, '.js')
         .sub(/\.styl/, '.css')
-        .sub /\.jade/, '.html'
+        .sub /\.html\.jade/, '.html'
       File.expand_path "#{@options[:dest]}/#{path}"
     end
 
