@@ -3,8 +3,11 @@ guard-mirror
 
 A CoffeeScript, Stylus, and Jade (HTML and JST) Guard that mirrors your source
 files (.coffee/.styl/.jade/.jst.jadet) in another location (public/www/etc...).
+guard-mirror also can compress the files on the fly for use in production with
+a simple `compress: true` option. Google Closure Compiler is used for JS and
+YUI Compressor for CSS. Jade -> HTML files are automatically shrinkwrapped.
 
-I created this to help with Cordova development and it's working out really nice!
+I created this to help with PhoneGap/Cordova development and it's working out really nice!
 
 Installation
 ------------
@@ -14,7 +17,12 @@ In your `Gemfile`...
 ```ruby
 source :rubygems
 
-gem install guard-mirror
+gem 'guard-mirror'
+# Optionally a notifier like Growl.
+# Syntax/parse errors will be displayed
+# in notifications which becomes very
+# handy!
+# gem 'growl'
 ```
 
 Configuration

@@ -64,6 +64,7 @@ module ::Guard
             begin
               @env[path]
             rescue => e
+              Notifier.notify e.message, title: 'guard-mirror', image: :failed
               UI.error e.message
               e.message
             end
