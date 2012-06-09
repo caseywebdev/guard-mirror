@@ -74,7 +74,7 @@ module ::Guard
             begin
               @env[path]
             rescue => e
-              if @options[:nofify]
+              if @options[:notify]
                 Notifier.notify e.message,
                   title: 'guard-mirror',
                   image: :failed
