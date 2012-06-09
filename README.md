@@ -2,12 +2,12 @@ guard-mirror
 ============
 
 A CoffeeScript, Stylus, and Jade (HTML and JST) Guard that mirrors your source
-files (.coffee/.styl/.jade/.jst.jadet) in another location (public/www/etc...).
-guard-mirror also can compress the files on the fly for use in production with
-a simple `compress: true` option. Google Closure Compiler is used for JS and
-YUI Compressor for CSS. Jade -> HTML files are automatically shrinkwrapped.
-Sprockets is used for file requiring and concatination so all of the same
-Sprockets syntax can be used.
+files (.coffee/.styl/.jst.jade/.html.jade) in another location
+(public/www/etc...). guard-mirror also can compress the files on the fly for
+use in production with a simple `compress: true` option. Google Closure
+Compiler is used for JS and YUI Compressor for CSS. Jade -> HTML files are
+automatically shrinkwrapped. Sprockets is used for file requiring and
+concatination so all of the same Sprockets syntax can be used.
 
 I created this to help with PhoneGap/Cordova development and it's working out really nice!
 
