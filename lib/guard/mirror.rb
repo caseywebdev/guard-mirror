@@ -37,20 +37,19 @@ module ::Guard
 
       @options[:paths].each { |path| @env.append_path path }
 
-      if @options[:compress]
-        @env.js_compressor = ::Closure::Compiler.new
-        @env.css_compressor = ::YUI::CssCompressor.new
-      end
+      enable_compression if @options[:compress] == true
 
     end
 
     def start
       UI.info 'A mirror has started.'
-      run_all
+      run_all false
     end
 
-    def run_all
-      UI.info 'Mirroring all files...'
+    def run_all compress = true
+      compress = (compress && @options[:compress] == :run_all) ||
+        @options[:compress] == true
+      UI.info "Mirroring #{compress ? 'and compressing ' : ''}all files..."
       if @options[:target]
         paths = [@options[:target]]
       else
@@ -60,7 +59,9 @@ module ::Guard
           end
         end.flatten
       end
+      enable_compression if compress
       run_on_changes paths
+      disable_compression unless @options[:compress] == true
     end
 
     def run_on_changes paths
@@ -96,6 +97,16 @@ module ::Guard
         .sub(/\.styl/, '.css')
         .sub /\.html\.jade/, '.html'
       File.expand_path "#{@options[:dest]}/#{path}"
+    end
+
+    def enable_compression
+      @env.js_compressor = ::Closure::Compiler.new
+      @env.css_compressor = ::YUI::CssCompressor.new
+    end
+
+    def disable_compression
+      @env.js_compressor = nil
+      @env.css_compressor = nil
     end
 
   end

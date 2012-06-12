@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'guard-mirror'
-  s.version     = '0.2.1'
-  s.date        = '2012-06-08'
+  s.version     = '0.2.2'
+  s.date        = '2012-06-12'
   s.summary     = 'Mirror .coffee, .styl, and .jade as .js, .css, and .html'
   s.author      = 'Casey Foster'
   s.email       = 'nick@quaran.to'
