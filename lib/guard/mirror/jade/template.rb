@@ -12,7 +12,7 @@ module ::Jade
         compiler = Compiler
       end
 
-      compiler.new(client: false, filename: file).compile data
+      compiler.new(client: compiler == Compiler, filename: file).compile data
     end
   end
 end
