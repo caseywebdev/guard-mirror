@@ -1,14 +1,12 @@
 module ::Jade
-  class Template
+  class Template < Tilt::Template
 
   private
 
     def compile_function
       if file.end_with? '.html.jade'
-        Template.default_mime_type = 'text/html'
         compiler = HtmlCompiler
       else
-        Template.default_mime_type = 'application/javascript'
         compiler = Compiler
       end
 
