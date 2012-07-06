@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'guard-mirror'
-  s.version     = '0.2.4'
+  s.version     = '0.2.5'
   s.date        = '2012-06-19'
   s.summary     = 'Mirror .coffee, .styl, and .jade as .js, .css, and .html'
   s.author      = 'Casey Foster'
@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
     (public/www/etc...).
   EOF
 
-  s.required_ruby_version = '>= 1.9.3'
+  s.required_ruby_version = '>= 1.9.0'
   s.add_dependency 'guard'
   s.add_dependency 'sprockets'
   s.add_dependency 'coffee-script'
